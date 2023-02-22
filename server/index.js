@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const userRouter = require("./routes/users")
 const authRouter = require("./routes/auth")
+const postRouter = require("./routes/posts");
 
 const connection =mongoose.connect(process.env.url)
 
@@ -14,6 +15,7 @@ app.use(helmet());
 app.use(morgan("common"));
 app.use("/api/users",userRouter)
 app.use("/api/auth",authRouter)
+app.use("/api/posts", postRouter);
 
 
 app.listen(4500,async()=>{
