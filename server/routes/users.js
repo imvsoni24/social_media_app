@@ -42,15 +42,40 @@ userRouter.delete("/:id", async (req, res) => {
   }
 });
 
-userRouter.get("/:id",async(req,res)=>{
+userRouter.get("/",async(req,res)=>{
+  const userId = req.query.userId
+  const username = req.query.username;
     try{
-       const user =  await UserModel.findById(req.params.id);
+       const user = userId
+         ? await UserModel.findById(userId)
+         : await UserModel.findOne({username:username});
        const {password,updatedAt,...other} = user._doc
-       res.send(other)
+       res.json(other)
     }
     catch(err){
         res.json(err);
     }
+})
+
+userRouter.get("/friends/:userId",async(req,res)=>{
+  try{
+    const user = await UserModel.findById(req.params.userId)
+    const friends = await Promise.all(
+      user.followings.map((friendId)=>{
+        return UserModel.findById(friendId)
+      })
+    )
+    let friendList = []
+    friends.map((friend)=>{
+      const {_id,username,profilePicture} = friend
+      friendList.push({ _id, username, profilePicture });
+    })
+   res.json(friendList)
+  }
+  catch(err){
+    res.json(err)
+  }
+
 })
 
 userRouter.put("/:id/follow",async(req,res)=>{

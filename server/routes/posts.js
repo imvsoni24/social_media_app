@@ -6,8 +6,8 @@ const UserModel = require("../models/user")
 postRouter.post("/create", async (req, res) => {
   try {
     const newPost = new PostModel(req.body);
-    await newPost.save()
-    res.json({ msg: "Successfully Created" });
+    const savedPost = await newPost.save()
+    res.json(savedPost);
    
   } catch (err) {
     res.json(err);
@@ -17,7 +17,7 @@ postRouter.post("/create", async (req, res) => {
 postRouter.get("/", async (req, res) => {
   try {
     const post = await PostModel.find();
-    res.send(post)
+    res.json(post)
   } catch (err) {
     res.json(err);
   }
@@ -76,9 +76,9 @@ postRouter.put("/:id/like", async (req, res) => {
 });
 
 
-postRouter.get("/timeline/all", async (req, res) => {
+postRouter.get("/timeline/:userId", async (req, res) => {
   try {
-    const currentUser = await UserModel.findById(req.body.userId);
+    const currentUser = await UserModel.findById(req.params.userId);
     const userPosts = await PostModel.find({userId:currentUser._id})
     const friendPosts = await Promise.all(
         currentUser.followings.map((friendId)=>{
@@ -86,6 +86,16 @@ postRouter.get("/timeline/all", async (req, res) => {
         })
     )
     res.json(userPosts.concat(...friendPosts))
+  } catch (err) {
+    res.json(err);
+  }
+});
+
+postRouter.get("/profile/:username", async (req, res) => {
+  try {
+    const user = await UserModel.findOne({username:req.params.username})
+    const posts = await PostModel.find({userId:user._id})
+    res.json(posts)
   } catch (err) {
     res.json(err);
   }

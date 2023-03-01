@@ -25,7 +25,7 @@ authRouter.post("/login",async(req,res)=>{
     !user && res.json({msg:"User not found"})
     const checkPassword = await bcrypt.compare(req.body.password,user.password)
     !checkPassword && res.json({ msg: "user credential are wrong" });
-    res.json({msg:"Successfully login"})
+    res.json(user)
   }
   catch(err){
     res.json(err)
