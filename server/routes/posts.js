@@ -2,10 +2,25 @@ const express = require("express");
 const postRouter = express.Router();
 const PostModel = require("../models/post");
 const UserModel = require("../models/user")
+const multer = require("multer");
 
-postRouter.post("/create", async (req, res) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now()+"-"+file.originalname);
+  },
+});
+const upload = multer({ storage:storage});
+
+postRouter.post("/create",upload.single("file") ,async (req, res) => {
   try {
-    const newPost = new PostModel(req.body);
+    const newPost = new PostModel({
+      userId: req.body.userId,
+      desc: req.body.desc,
+      img: req.file ? req.file.filename:null
+    });
     const savedPost = await newPost.save()
     res.json(savedPost);
    
@@ -64,10 +79,10 @@ postRouter.put("/:id/like", async (req, res) => {
   try {
     const post = await PostModel.findById(req.params.id);
     if (!post.likes.includes(req.body.userId)) {
-      await PostModel.updateOne({ $push: {likes:req.body.userId} });
+      await post.updateOne({ $push: {likes:req.body.userId} });
       res.json({ msg: "Successfully liked" });
     } else {
-      await PostModel.updateOne({ $pull: { likes: req.body.userId } });
+      await post.updateOne({ $pull: { likes: req.body.userId } });
       res.json({ msg: "Successfully unliked" });
     }
   } catch (err) {
