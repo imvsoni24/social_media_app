@@ -1,6 +1,8 @@
 import React from 'react'
 import "./sidebar.css"
 import {Bookmark, Chat, Event, Group, HelpOutline, PlayCircleFilledOutlined, RssFeed, School, WorkOutline} from "@mui/icons-material"
+import CloseFriend from '../closeFriend/CloseFriend';
+import { Users } from '../../data';
 
 const Sidebar = () => {
   return (
@@ -47,142 +49,10 @@ const Sidebar = () => {
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
-          <li className="sidebarFriend">
-            <img
-              className="sidebarFriendImg"
-              src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/2.jpeg?raw=true"
-              alt=""
-            />
-            <span className="sidebarFriendName">Jane Doe</span>
-          </li>
+          {Users.map((u)=>(
+            <CloseFriend key={u.id} user={u}/>
+          ))}
+          
         </ul>
       </div>
     </div>

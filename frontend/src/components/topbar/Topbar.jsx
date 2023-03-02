@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./topbar.css"
 import {Search,Person,Chat,Notifications} from "@mui/icons-material";
-
+import {Link} from "react-router-dom"
+import { AuthContext } from '../../context/AuthContext';
 const Topbar = () => {
+  const {user} = useContext(AuthContext);
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
-        <span className="logo">Vinstagram</span>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <span className="logo">Vinsta</span>
+        </Link>
       </div>
       <div className="topbarCenter">
         <div className="searchBar">
-          <Search className='searchIcon' />
+          <Search className="searchIcon" />
           <input
             type="text"
             className="searchInput"
@@ -37,11 +41,17 @@ const Topbar = () => {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <img
-          src="https://github.com/safak/youtube/blob/react-social-ui/public/assets/person/1.jpeg?raw=true"
-          alt=""
-          className="topbarImg"
-        />
+        <Link to={`/profile/${user.username}`}>
+          <img
+            src={
+              user.profilePicture
+                ? user.profilePicture
+                : "https://github.com/safak/youtube/blob/mern-social-app/api/public/images/person/noAvatar.png?raw=true"
+            }
+            alt=""
+            className="topbarImg"
+          />
+        </Link>
       </div>
     </div>
   );
